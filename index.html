@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="logic.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    <p>html ready</p>
-    <br>
-    <div><p>Css <span class="gone">not </span>ready</p></div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="logic.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <title>Document</title>
+    </head>
+    <body>
+        <Header class="header"></Header>
+        <div class="container">
+            <h2 class="title">List Project</h2>
+            <input id="textBox" placeholder="Put next list item here"></input>
+            <br>
+            <button class="submitButton" onclick="addList()">submit</button>
+            <div id="listArea"></div>
+        </div>
+    </body>
 </html>
