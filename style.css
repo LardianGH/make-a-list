@@ -9,6 +9,12 @@ body {
 
 .title {
     color: yellow;
+    width: 60%;
+    display: inline-block;
+}
+
+#optionNumberedButton {
+    display: inline-block;
 }
 
 #textBox {
@@ -17,7 +23,11 @@ body {
     border: none;
     border-bottom: solid;
     text-align: center;
-    
+}
+
+.grouper {
+
+    text-align: center;
 }
 
 ::placeholder {
@@ -29,6 +39,10 @@ body {
 }
 
 .container {
+    border-left: solid;
+    border-right: solid;
+    border-width: 4px;
+    border-color: yellow;
     background-color: navy;
     width: 40%;
     padding: 1%;
@@ -63,29 +77,16 @@ body {
     background-color: rgb(10, 32, 73)
 }
 
-/*
-#color0,#color6,#color12{
-    background-color: red;
+.noteNumber {
+    color: yellow;
 }
 
-#color1,#color7,#color13{
-    background-color: orange;
+@media only screen and (max-width: 600px) {
+
+.container {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
 }
 
-#color2,#color8,#color14{
-    background-color: yellow;
-    color: black
 }
-
-#color3,#color9,#color15{
-    background-color: green;
-}
-
-#color4,#color10,#color16{
-    background-color: indigo;
-}
-
-#color5,#color11,#color17{
-    background-color: violet;
-}
-*/

@@ -5,11 +5,26 @@ let noteNumber = "";
 let colorNumber = 0;
 
 function changeNumbered() {
-    if (optionNumberedNotes === true) {
-        optionNumberedNotes = false;
+    if (document.getElementById("optionNumberedButton").innerHTML === "On") {
+        //console.log("on")
+       //console.log(list.length)
+        for (i = 0; i < list.length; i ++) {
+            //console.log(i)
+        document.getElementsByClassName("noteNumber")[i].style.visibility = 'hidden';
+        document.getElementsByClassName("noteNumber")[i].style.display = 'none';
+        //console.log(document.getElementById("listArea"))
+        document.getElementById("listArea").style.textAlign = 'center';
+    }
         document.getElementById("optionNumberedButton").innerHTML = "Off"
     } else {
-        optionNumberedNotes = true;
+        //console.log("off")
+        //console.log(list.length)
+        for (i = 0; i < list.length; i ++) {
+            //console.log(i)
+            document.getElementsByClassName("noteNumber")[i].style.visibility = 'visible';
+            document.getElementsByClassName("noteNumber")[i].style.display = 'inline';
+            document.getElementById("listArea").style.textAlign = 'left';
+        }
         document.getElementById("optionNumberedButton").innerHTML = "On"
     }
 };
@@ -34,12 +49,15 @@ function addList() {
     if (document.getElementById("textBox").value !== "") {
         numberSlider()
         checkColor()
-        const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ noteNumber + document.getElementById("textBox").value + '</div>'
+        const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' +document.getElementById("textBox").value + '</div>'
+       
+        console.log(document.getElementsByClassName("noteNumber"))
+       
         list.push(newestInput)
-        console.log(list)
+       // console.log(list)
         document.getElementById("listArea").innerHTML = list.join("")
         document.getElementById("textBox").value = ""
-        console.log(document.getElementById("listArea").innerHTML)
+        // console.log(document.getElementById("listArea").innerHTML)
 } else {
     document.getElementById("errorMessage").innerHTML = "you cant enter a blank space"
     setTimeout(function(){
