@@ -8,13 +8,13 @@
         <title>Document</title>
     </head>
     <body>
-        <Header class="header"></Header>
-        <div class="container">
-            <h2 class="title">List Project</h2>
-            <input id="textBox" placeholder="Put next list item here"></input>
-            <br>
-            <button class="submitButton" onclick="addList()">submit</button>
-            <div id="listArea"></div>
+        <Header class="header"></Header> <!--   -->
+        <div class="container"> <!-- Contains stuff to the center for more ...neat looking notes? -->
+            <h2 class="title">List Project</h2> <!-- The title at the top of the list -->
+            <input id="textBox" placeholder="Put next list item here"></input> <!-- The input box for text -->
+            <button class="submitButton" onclick="addList()">submit</button> <!-- The button to submit the input -->
+            <p id="errorMessage"></p> <!-- Displays if something goes wrong with the input (or lack thereof) -->
+            <div id="listArea"></div> <!-- Where the list items will be displayed  -->
         </div>
     </body>
 </html>
