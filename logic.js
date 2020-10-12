@@ -1,7 +1,8 @@
 const list = [];
 const br = document.createElement("br");
 let optionNumberedNotes = true;
-let NoteNumber = ""
+let noteNumber = "";
+let colorNumber = 0;
 
 function changeNumbered() {
     if (optionNumberedNotes === true) {
@@ -15,16 +16,25 @@ function changeNumbered() {
 
 function numberSlider() {
     if (optionNumberedNotes === true) {
-        NoteNumber = (list.length + 1) + ". "
+        noteNumber = (list.length + 1) + ". "
     } else {
-        NoteNumber = ""
+        noteNumber = ""
+    }
+}
+
+function checkColor() {
+    if (list.length % 2 === 0) {
+        colorNumber = 2
+    } else {
+        colorNumber = 1
     }
 }
 
 function addList() {
     if (document.getElementById("textBox").value !== "") {
         numberSlider()
-        const newestInput = '<div class="listSlot" id="color' + list.length + '","color">'+ NoteNumber + document.getElementById("textBox").value + '</div>'
+        checkColor()
+        const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ noteNumber + document.getElementById("textBox").value + '</div>'
         list.push(newestInput)
         console.log(list)
         document.getElementById("listArea").innerHTML = list.join("")
