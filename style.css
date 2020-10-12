@@ -37,8 +37,8 @@ body {
 }
 
 #listArea {
-    margin-left: 20%;
-    width: 60%;
+    padding-left: 1%;
+    padding-right: 1%;
     text-align: left;
     font-size: 30px;
 }
@@ -55,6 +55,15 @@ body {
     margin: 2px;
 }
 
+#color0, #color2, #color4, #color6, #color8, #color10, #color12 {
+    background-color: rgb(23, 67, 150)
+}
+
+#color1, #color3, #color5, #color7, #color9, #color11, #color13 {
+    background-color: rgb(10, 32, 73)
+}
+
+/*
 #color0,#color6,#color12{
     background-color: red;
 }
@@ -79,3 +88,4 @@ body {
 #color5,#color11,#color17{
     background-color: violet;
 }
+*/
