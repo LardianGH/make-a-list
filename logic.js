@@ -61,16 +61,26 @@ function checkColor() {
     }
 }
 
-function addList() {
+function addNote() {
     if (document.getElementById("textBox").value !== "") {
         numberSlider()
         checkColor()
-        const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' +document.getElementById("textBox").value + '</div>'
-        
+
         dataRef.ref().push({
-            Success: true,
+            Note: document.getElementById("textBox").value,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
+
+        dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+
+            var note = snapshot.val().Note
+            console.log(note)
+            list.push(note)
+            document.getElementById("listArea").innerHTML = list
+        });
+
+        /*
+        const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' +document.getElementById("textBox").value + '</div>'
         
         console.log(document.getElementsByClassName("noteNumber"))
        
@@ -79,6 +89,7 @@ function addList() {
         document.getElementById("listArea").innerHTML = list.join("")
         document.getElementById("textBox").value = ""
         // console.log(document.getElementById("listArea").innerHTML)
+        */
 } else {
     document.getElementById("errorMessage").innerHTML = "you cant enter a blank space"
     setTimeout(function(){
