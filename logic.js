@@ -1,3 +1,19 @@
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB0zZEIbl2kBwOmEbw6PcQIeA0Kg2JRDOU",
+    authDomain: "tutor-devs.firebaseapp.com",
+    databaseURL: "https://tutor-devs.firebaseio.com",
+    projectId: "tutor-devs",
+    storageBucket: "", //tutor-devs.appspot.com
+    messagingSenderId: "451544851996",
+    appId: "1:451544851996:web:352121938879bcd6aa21d9"
+  };
+  // Initialize Firebase
+  console.log(firebase)
+  firebase.initializeApp(firebaseConfig);
+
+  var dataRef = firebase.database();
+
 const list = [];
 const br = document.createElement("br");
 let optionNumberedNotes = true;
@@ -50,7 +66,12 @@ function addList() {
         numberSlider()
         checkColor()
         const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' +document.getElementById("textBox").value + '</div>'
-       
+        
+        dataRef.ref().push({
+            Success: true,
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
+        });
+        
         console.log(document.getElementsByClassName("noteNumber"))
        
         list.push(newestInput)
