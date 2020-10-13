@@ -9,18 +9,19 @@
     appId: "1:451544851996:web:352121938879bcd6aa21d9"
   };
   // Initialize Firebase
-  console.log(firebase)
+
   firebase.initializeApp(firebaseConfig);
 
   var dataRef = firebase.database();
 
-const list = [];
+let list = [];
+let newestInput = "";
 const br = document.createElement("br");
 let optionNumberedNotes = true;
 let noteNumber = "";
 let colorNumber = 0;
 
-function changeNumbered() {
+function changeNumbered() { //Controls wether the list is presented with numbers or centered
     if (document.getElementById("optionNumberedButton").innerHTML === "On") {
         //console.log("on")
        //console.log(list.length)
@@ -61,22 +62,42 @@ function checkColor() {
     }
 }
 
+dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+
+    document.getElementById("listArea").innerHTML = "";
+
+    const note = snapshot.val().Note;
+    console.log("How many times am i getting called?")
+    console.log(note) //something wrong here
+
+
+    newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' + note + '</div>'
+    
+    list.push(newestInput)
+
+    console.log("the list is : " + list)
+
+    console.log('complete run-through')
+    //console.log("List is : " + newestInput)
+    //console.log("List is : " + list)
+
+    document.getElementById("listArea").innerHTML = list.join("")
+        
+    document.getElementById("textBox").value = "";
+
+
+});
+
 function addNote() {
     if (document.getElementById("textBox").value !== "") {
         numberSlider()
         checkColor()
 
+        console.log("---------------------Start-----------------------")
+
         dataRef.ref().push({
             Note: document.getElementById("textBox").value,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
-        });
-
-        dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
-
-            var note = snapshot.val().Note
-            console.log(note)
-            list.push(note)
-            document.getElementById("listArea").innerHTML = list
         });
 
         /*
