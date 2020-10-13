@@ -3,21 +3,21 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script>
-        <script src="logic.js"></script>
-        <link rel="stylesheet" href="style.css">
+        <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script> <!-- resources for the main firebase -->
+        <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script> <!-- resources for the firebase database-->
+        <script src="logic.js"></script> <!-- Connects the HTML to the JS (usually best to have after all other resources)-->
+        <link rel="stylesheet" href="style.css"> <!-- connects the HTML to the CSS -->
         <title>Document</title>
     </head>
     <body>
         <Header class="header"></Header> <!--   -->
         <div class="container"> <!-- Contains stuff to the center for more ...neat looking notes? -->
-            <div class="grouper">
+            <div class="grouper"> <!-- Groups the title and button so they will appear next to each other instead of one on top of the other -->
                 <h2 class="title">List Project</h2> <!-- The title at the top of the list -->
-                <button id="optionNumberedButton" onclick="changeNumbered()">On</button>
+                <button id="optionNumberedButton" onclick="changeNumbered()">On</button> <!-- Button calls the changedNumbered function -->
             </div>
             <input id="textBox" placeholder="Put next list item here"></input> <!-- The input box for text -->
-            <button class="submitButton" onclick="addNote()">submit</button> <!-- The button to submit the input -->
+            <button class="submitButton" onclick="addNote()">submit</button> <!-- The button to submit the input, calls the addNote function -->
             <p id="errorMessage"></p> <!-- Displays if something goes wrong with the input (or lack thereof) -->
             <div id="listArea" style='textAlign: left;'></div> <!-- Where the list items will be displayed  -->
         </div>

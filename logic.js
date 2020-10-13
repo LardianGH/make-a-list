@@ -21,99 +21,93 @@ let optionNumberedNotes = true;
 let noteNumber = "";
 let colorNumber = 0;
 
-function changeNumbered() { //Controls wether the list is presented with numbers or centered
-    if (document.getElementById("optionNumberedButton").innerHTML === "On") {
-        //console.log("on")
-       //console.log(list.length)
-        for (i = 0; i < list.length; i ++) {
-            //console.log(i)
-        document.getElementsByClassName("noteNumber")[i].style.visibility = 'hidden';
-        document.getElementsByClassName("noteNumber")[i].style.display = 'none';
-        //console.log(document.getElementById("listArea"))
-        document.getElementById("listArea").style.textAlign = 'center';
+function hideNumbers() {
+console.log("hiding")
+    for (i = 0; i < list.length; i ++) { //for as many notes there are in the list
+console.log("hiding numbered")
+        document.getElementsByClassName("noteNumber")[i].style.visibility = 'hidden'; //go down the list and change the visiblity to hidden <-- might get rid of one of these
+        document.getElementsByClassName("noteNumber")[i].style.display = 'none'; //go down the list and change the display to none  
     }
-        document.getElementById("optionNumberedButton").innerHTML = "Off"
-    } else {
-        //console.log("off")
-        //console.log(list.length)
-        for (i = 0; i < list.length; i ++) {
-            //console.log(i)
-            document.getElementsByClassName("noteNumber")[i].style.visibility = 'visible';
-            document.getElementsByClassName("noteNumber")[i].style.display = 'inline';
-            document.getElementById("listArea").style.textAlign = 'left';
-        }
-        document.getElementById("optionNumberedButton").innerHTML = "On"
+    document.getElementById("listArea").style.textAlign = 'center'; //center everything in listArea
+
+}
+
+function showNumbers() {
+
+    for (i = 0; i < list.length; i ++) { //for as many notes there are in the list
+
+        document.getElementsByClassName("noteNumber")[i].style.visibility = 'visible'; //go down the list and change the visiblity to visible
+        document.getElementsByClassName("noteNumber")[i].style.display = 'inline'; //go down the list and change the display to inline
+    }
+    document.getElementById("listArea").style.textAlign = 'left'; //justify left everything in listArea
+
+}
+
+function changeNumbered() { //Controls wether the list is presented with numbers or centered
+    if (document.getElementById("optionNumberedButton").innerHTML === "On") { // If the "numbered" button says On (literally based off the html so kinda janky)
+
+    hideNumbers()
+    document.getElementById("optionNumberedButton").innerHTML = "Off" //Changes the button's HTML from On to Off
+
+    } else { // If the "numbered" button says anything other than On
+    showNumbers()
+    
+    document.getElementById("optionNumberedButton").innerHTML = "On" //Changes the button's HTML from Off to On
     }
 };
 
-function numberSlider() {
-    if (optionNumberedNotes === true) {
+    /* function numberSlider() { 
+    console.log("Number option = " + optionNumberedNotes)
+    if (optionNumberedNotes === true) { 
         noteNumber = (list.length + 1) + ". "
     } else {
         noteNumber = ""
+    } 
+    } */
+
+function checkColor() { //This decides what color each line will be
+    if (list.length % 2 === 0) { //If the number is 0 or divisible by 2 without a remainder
+        colorNumber = 2 //the colorNumber variable is 2
+    } else { //If the number is not divisible by 2 without remainder
+        colorNumber = 1 //the colorNumber variable is 1
     }
 }
 
-function checkColor() {
-    if (list.length % 2 === 0) {
-        colorNumber = 2
-    } else {
-        colorNumber = 1
-    }
-}
+dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { //Basically acts as an asynchronous loop
 
-dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
-    numberSlider()
-    checkColor()
-    document.getElementById("listArea").innerHTML = "";
+    noteNumber = (list.length + 1) + ". " // Generates a number of each item in the list dynamically (remakes the numbers visible by accident when centered)
 
-    const note = snapshot.val().Note;
-    console.log("How many times am i getting called?")
-    console.log(note) //something wrong here
+    checkColor() // Calls checkColor for every note in the list
 
 
-    newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' + note + '</div>'
+    const note = snapshot.val().Note; //sets the value of note to the current firebase note
+
+    newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="">' + noteNumber + '</span>' + note + '</div>' //Creates some HTML and sets that equal to a variable
     
-    list.push(newestInput)
+    list.push(newestInput) //pushes that HTML into the list array ready to be loaded onto the DOM
 
-    console.log("the list is : " + list)
-
-    console.log('complete run-through')
-    //console.log("List is : " + newestInput)
-    //console.log("List is : " + list)
-
-    document.getElementById("listArea").innerHTML = list.join("")
+    document.getElementById("listArea").innerHTML = list.join("") //gets rid of the commas in the list array and loads the HTML into the listArea
         
-    document.getElementById("textBox").value = "";
+    if (document.getElementById("optionNumberedButton").innerHTML === "Off") { //If the hide numbers button is in the off position when a new note is added
+        hideNumbers() //Hide numbers is called to re-hide the numbers
+    }
+
+    document.getElementById("textBox").value = ""; //Clears the textbox
 
 
 });
 
-function addNote() {
-    if (document.getElementById("textBox").value !== "") {
+function addNote() { //This submits the textbox data to firebase
+    if (document.getElementById("textBox").value !== "") { //If the textbox is not empty
 
-        console.log("---------------------Start-----------------------")
-
-        dataRef.ref().push({
-            Note: document.getElementById("textBox").value,
-            dateAdded: firebase.database.ServerValue.TIMESTAMP
+        dataRef.ref().push({ // push the following data
+            Note: document.getElementById("textBox").value, //the data in the textbox as the name Note
+            dateAdded: firebase.database.ServerValue.TIMESTAMP //the time it was uploaded in a hash form as the name dateAdded (used for retrieving and ordering later)
         });
-
-        /*
-        const newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="visibility:visible;">' + noteNumber + '</span>' +document.getElementById("textBox").value + '</div>'
-        
-        console.log(document.getElementsByClassName("noteNumber"))
-       
-        list.push(newestInput)
-       // console.log(list)
-        document.getElementById("listArea").innerHTML = list.join("")
-        document.getElementById("textBox").value = ""
-        // console.log(document.getElementById("listArea").innerHTML)
-        */
-} else {
-    document.getElementById("errorMessage").innerHTML = "you cant enter a blank space"
-    setTimeout(function(){
-        document.getElementById("errorMessage").innerHTML = ""
-    }, (1000 * 2.5))
+} else { //If the textbox is empty
+    document.getElementById("errorMessage").innerHTML = "you cant enter a blank space" //The error message (Currently "") changes to displays the error
+    setTimeout(function(){ //a timer is set, when the time runs out the code inside is run
+        document.getElementById("errorMessage").innerHTML = "" //the errorMessage reverts to ""
+    }, (1000 * 2.5)) //the timer lasts 2.5 seconds
 }
 }
