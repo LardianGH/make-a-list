@@ -63,7 +63,8 @@ function checkColor() {
 }
 
 dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
-
+    numberSlider()
+    checkColor()
     document.getElementById("listArea").innerHTML = "";
 
     const note = snapshot.val().Note;
@@ -90,8 +91,6 @@ dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
 
 function addNote() {
     if (document.getElementById("textBox").value !== "") {
-        numberSlider()
-        checkColor()
 
         console.log("---------------------Start-----------------------")
 
