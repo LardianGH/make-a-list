@@ -81,6 +81,19 @@ body {
     color: yellow;
 }
 
+.delButton {
+    float: right;
+    height: 100%;
+    margin: 0;
+    padding: 7.5px;
+    background-color: #ca416f;
+    color: white;
+}
+
+.delButton:hover {
+    background-color: #b11e4f
+}
+
 @media only screen and (max-width: 600px) {
 
 .container {

@@ -73,17 +73,38 @@ function checkColor() { //This decides what color each line will be
     }
 }
 
+function deleteNote(elem, key) {
+
+    console.log(elem)
+    console.log(key)
+
+
+    dataRef.ref(key + "/").set(
+        null
+      );
+
+      // console.log(dataRef.child("tutor-devs").child(key))
+
+    //console.log(dataRef.ref().orderByChild("dateAdded").equalTo(key).on('child_added'))
+    
+    //dataRef.ref().orderByChild("dateAdded").equalTo(key).on('child_added', (snapshot) => {
+    //snapshot.ref.remove()
+    //});
+
+}
+
 dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { //Basically acts as an asynchronous loop
 
-    noteNumber = (list.length + 1) + ". " // Generates a number of each item in the list dynamically (remakes the numbers visible by accident when centered)
+    noteNumber = (list.length + 1) // Generates a number of each item in the list dynamically (remakes the numbers visible by accident when centered)
 
     checkColor() // Calls checkColor for every note in the list
 
-
     const note = snapshot.val().Note; //sets the value of note to the current firebase note
 
-    newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">'+ '<span class=noteNumber style="">' + noteNumber + '</span>' + note + '</div>' //Creates some HTML and sets that equal to a variable
-    
+    const key = snapshot.key
+
+    newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">' + '<span class=noteNumber style="">' + noteNumber + '. </span>' + note + '<button class = "delButton" onclick="deleteNote(this, `' + key + '`)">del</button> </div>' //Creates some HTML and sets that equal to a variable
+    console.log(newestInput)
     list.push(newestInput) //pushes that HTML into the list array ready to be loaded onto the DOM
 
     document.getElementById("listArea").innerHTML = list.join("") //gets rid of the commas in the list array and loads the HTML into the listArea
@@ -102,7 +123,7 @@ function addNote() { //This submits the textbox data to firebase
 
         dataRef.ref().push({ // push the following data
             Note: document.getElementById("textBox").value, //the data in the textbox as the name Note
-            dateAdded: firebase.database.ServerValue.TIMESTAMP //the time it was uploaded in a hash form as the name dateAdded (used for retrieving and ordering later)
+            dateAdded: firebase.database.ServerValue.TIMESTAMP, //the time it was uploaded in a hash form as the name dateAdded (used for retrieving and ordering later)
         });
 } else { //If the textbox is empty
     document.getElementById("errorMessage").innerHTML = "you cant enter a blank space" //The error message (Currently "") changes to displays the error
