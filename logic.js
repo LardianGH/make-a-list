@@ -73,28 +73,28 @@ function checkColor() { //This decides what color each line will be
     }
 }
 
-function deleteNote(elem, key) {
+function deleteNote(key) {  //sends the key of the data? (Idk what to call it) over as the name key
 
-    console.log(elem)
-    console.log(key)
-
-
-    dataRef.ref(key + "/").set(
-        null
-      );
-
-      // console.log(dataRef.child("tutor-devs").child(key))
-
-    //console.log(dataRef.ref().orderByChild("dateAdded").equalTo(key).on('child_added'))
+    dataRef.ref(key + "/").remove(); // .set( null ) works too  
     
-    //dataRef.ref().orderByChild("dateAdded").equalTo(key).on('child_added', (snapshot) => {
-    //snapshot.ref.remove()
-    //});
+    
 
 }
 
-dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { //Basically acts as an asynchronous loop
+dataRef.ref().orderByChild("dateAdded").on("child_removed", function(snapshot) {
+    console.log(snapshot.key)
+    const selectedHTML = list[0]
 
+    console.log(selectedHTML[0])
+    
+   // const found = list.find(element => element > 10);
+
+   // console.log(found);
+
+})
+
+dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { //Basically acts as an asynchronous loop
+    
     noteNumber = (list.length + 1) // Generates a number of each item in the list dynamically (remakes the numbers visible by accident when centered)
 
     checkColor() // Calls checkColor for every note in the list
@@ -103,7 +103,7 @@ dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { /
 
     const key = snapshot.key
 
-    newestInput = '<div class="listSlot" id="color' + colorNumber + '","color">' + '<span class=noteNumber style="">' + noteNumber + '. </span>' + note + '<button class = "delButton" onclick="deleteNote(this, `' + key + '`)">del</button> </div>' //Creates some HTML and sets that equal to a variable
+    newestInput = '<div class="listSlot" key = `' + key + '`  id="color' + colorNumber + '","color">' + '<span class=noteNumber style="">' + noteNumber + '. </span>' + note + '<button class = "delButton" onclick="deleteNote(`' + key + '`)">del</button> </div>' //Creates some HTML and sets that equal to a variable
     console.log(newestInput)
     list.push(newestInput) //pushes that HTML into the list array ready to be loaded onto the DOM
 
