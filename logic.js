@@ -13,13 +13,18 @@
   firebase.initializeApp(firebaseConfig);
 
   var dataRef = firebase.database();
-
 let list = [];
+let cloneList = []
 let newestInput = "";
 const br = document.createElement("br");
 let optionNumberedNotes = true;
 let noteNumber = "";
 let colorNumber = 0;
+
+let listName = "Groceries"
+const tempFile = listName + "/Notes"
+
+document.getElementById("title").innerHTML = listName
 
 function hideNumbers() {
 console.log("hiding")
@@ -75,25 +80,43 @@ function checkColor() { //This decides what color each line will be
 
 function deleteNote(key) {  //sends the key of the data? (Idk what to call it) over as the name key
 
-    dataRef.ref(key + "/").remove(); // .set( null ) works too  
-    
-    
+    dataRef.ref("/" + tempFile + "/" + key + "/").remove(); // .set( null ) works too  
 
+    console.log(key)
+
+    console.log(document.getElementById(key))
+
+    document.getElementById(key).innerHTML = ""
+
+    checkColor()
+    
+    
+//NOT the way to go location.reload()
 }
 
-dataRef.ref().orderByChild("dateAdded").on("child_removed", function(snapshot) {
-    console.log(snapshot.key)
-    const selectedHTML = list[0]
 
-    console.log(selectedHTML[0])
-    
-   // const found = list.find(element => element > 10);
+dataRef.ref("/" + tempFile).orderByChild("dateAdded").on("child_removed", function(snapshot) {
 
-   // console.log(found);
+    console.log(cloneList)
+    //var el = document.createElement( 'html' );
+    //el.innerHTML = list[0];
+    //console.log(el.getElementsByTagName("div")[0].attributes[1].value)
+
+    console.log(snapshot.val().Note);
+ let removedNote = snapshot.val().Note;
+ let removedNoteIndex = cloneList.indexOf(removedNote);
+
+ console.log(list[removedNoteIndex]);
+
+ if (removedNoteIndex > -1) {
+     list.splice(removedNoteIndex, 1);
+ }
+ console.log("list: " + list )
 
 })
 
-dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { //Basically acts as an asynchronous loop
+
+dataRef.ref("/" + tempFile).orderByChild("dateAdded").on("child_added", function(snapshot) { //Basically acts as an asynchronous loop
     
     noteNumber = (list.length + 1) // Generates a number of each item in the list dynamically (remakes the numbers visible by accident when centered)
 
@@ -103,8 +126,9 @@ dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { /
 
     const key = snapshot.key
 
-    newestInput = '<div class="listSlot" key = `' + key + '`  id="color' + colorNumber + '","color">' + '<span class=noteNumber style="">' + noteNumber + '. </span>' + note + '<button class = "delButton" onclick="deleteNote(`' + key + '`)">del</button> </div>' //Creates some HTML and sets that equal to a variable
-    console.log(newestInput)
+    newestInput = '<div class="listSlot color' + colorNumber + '" name = "' + note + '" id=' + key + '>' + '<span class=noteNumber style="">' + noteNumber + '. </span>' + note + '<button class = "delButton" onclick="deleteNote(`' + key + '`)">del</button> </div>' //Creates some HTML and sets that equal to a variable
+    //console.log(newestInput)
+    cloneList.push(note)
     list.push(newestInput) //pushes that HTML into the list array ready to be loaded onto the DOM
 
     document.getElementById("listArea").innerHTML = list.join("") //gets rid of the commas in the list array and loads the HTML into the listArea
@@ -118,10 +142,17 @@ dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) { /
 
 });
 
+
+function addList() {
+    console.log("hi")
+    listName = document.getElementById("createList").value
+    console.log(listName)
+}
+
 function addNote() { //This submits the textbox data to firebase
     if (document.getElementById("textBox").value !== "") { //If the textbox is not empty
 
-        dataRef.ref().push({ // push the following data
+        dataRef.ref("/" + tempFile).push({ // push the following data
             Note: document.getElementById("textBox").value, //the data in the textbox as the name Note
             dateAdded: firebase.database.ServerValue.TIMESTAMP, //the time it was uploaded in a hash form as the name dateAdded (used for retrieving and ordering later)
         });

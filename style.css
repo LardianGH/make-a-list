@@ -7,7 +7,19 @@ body {
     margin-bottom: 5%;
 }
 
-.title {
+.selectBar {
+    background-color: red;
+    width: 25%;
+    height: 560px;
+    float: left;
+    padding-top: 2%
+}
+
+.selectBarHeader {
+    text-align: center;
+}
+
+#title {
     color: yellow;
     width: 60%;
     display: inline-block;
@@ -64,16 +76,20 @@ body {
     font-style: italic;
 }
 
+#-mjh1sm0fnjzonjdkwqm {
+    color: green;
+}
+
 #color {
     padding: 5px;
     margin: 2px;
 }
 
-#color1 {
+.color1 {
     background-color: rgb(23, 67, 150)
 }
 
-#color2 {
+.color2 {
     background-color: rgb(10, 32, 73)
 }
 

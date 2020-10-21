@@ -5,15 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script> <!-- resources for the main firebase -->
         <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script> <!-- resources for the firebase database-->
-        <script src="logic.js"></script> <!-- Connects the HTML to the JS (usually best to have after all other resources)-->
         <link rel="stylesheet" href="style.css"> <!-- connects the HTML to the CSS -->
         <title>Document</title>
     </head>
     <body>
-        <Header class="header"></Header> <!--   -->
+        <Header class="header"></Header> <!-- Adds space to the top of the page  -->
+
+        <div class="selectBar">
+            <Header class="selectBarHeader">
+                <input id="createList"> </input>
+                <button class="submitButton" onclick="addList()">submit</button>
+            </Header>  
+            wake up
+        </div> <!-- Contains the selection of lists on the left side  -->
+
         <div class="container"> <!-- Contains stuff to the center for more ...neat looking notes? -->
             <div class="grouper"> <!-- Groups the title and button so they will appear next to each other instead of one on top of the other -->
-                <h2 class="title">List Project</h2> <!-- The title at the top of the list -->
+                <h2 id="title">List Project</h2> <!-- The title at the top of the list -->
                 <button id="optionNumberedButton" onclick="changeNumbered()">On</button> <!-- Button calls the changedNumbered function -->
             </div>
             <input id="textBox" placeholder="Put next list item here"></input> <!-- The input box for text -->
@@ -23,3 +31,4 @@
         </div>
     </body>
 </html>
+<script src="logic.js"></script> <!-- Connects the HTML to the JS (usually best to have after all other resources)-->
